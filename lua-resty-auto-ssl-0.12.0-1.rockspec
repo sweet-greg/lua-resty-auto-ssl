@@ -1,7 +1,7 @@
-package = "fork2-sc-lua-resty-auto-ssl"
+package = "fork3-sc-lua-resty-auto-ssl"
 version = "0.12.0-1"
 source = {
-  url = "https://github.com/sweet-greg/lua-resty-auto-ssl/archive/master.zip",
+  url = "git://github.com/sweet-greg/lua-resty-auto-ssl.git",
   tag = "master",
 }
 description = {
