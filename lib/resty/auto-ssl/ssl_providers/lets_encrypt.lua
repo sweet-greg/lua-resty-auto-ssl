@@ -2,6 +2,19 @@ local _M = {}
 
 local shell_execute = require "resty.auto-ssl.utils.shell_execute"
 
+function string:split(delimiter)
+  local result = { }
+  local from  = 1
+  local delim_from, delim_to = string.find( self, delimiter, from  )
+  while delim_from do
+    table.insert( result, string.sub( self, from , delim_from-1 ) )
+    from  = delim_to + 1
+    delim_from, delim_to = string.find( self, delimiter, from  )
+  end
+  table.insert( result, string.sub( self, from  ) )
+  return result
+end
+
 function _M.issue_cert(auto_ssl_instance, domain)
   assert(type(domain) == "string", "domain must be a string")
 
@@ -47,6 +60,9 @@ function _M.issue_cert(auto_ssl_instance, domain)
   -- The result of running that command should result in the certs being
   -- populated in our storage (due to the deploy_cert hook triggering).
   local storage = auto_ssl_instance.storage
+  
+  -- Multiple domains can be inside the string, only check for the first one
+  domain = domain:split(" ")[1]
   local cert, get_cert_err = storage:get_cert(domain)
   if get_cert_err then
     ngx.log(ngx.ERR, "auto-ssl: error fetching certificate from storage for ", domain, ": ", get_cert_err)
