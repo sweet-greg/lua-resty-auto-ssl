@@ -1,4 +1,4 @@
-package = "lua-resty-auto-ssl"
+package = "fork-sc-lua-resty-auto-ssl"
 version = "0.12.0-1"
 source = {
   url = "git@github.com:sweet-greg/lua-resty-auto-ssl.git",
